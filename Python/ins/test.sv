@@ -133,6 +133,52 @@ module tr8
   // Design content        
 endmodule
 
+module tr9 #(parameter
+    MODE = 1,
+    DW   = 10,//()()
+    CW   = 10,//()()
+    FW   = (DW/2+CW/2))//123
+( inout [7:0]  a,//();
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+output [(MODE?7:3):0] bbbb,
+              output [DW/2-1:0]  c);//);
+
+  // Design content        
+endmodule
+
+module tr10 #(parameter/*123*/
+    MODE = 1,/*123*/
+    DW   = 10,//()()
+    CW   = 10,//()()
+    FW   = (DW/2+CW/2))//123
+( inout [7:0]  a,//();
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+output [(MODE?7:3):0] bbbb,
+              output [DW/2-1:0]  c);//);
+
+  // Design content        
+endmodule
+
+module tr11 ( /*123*/
+    inout [7:0]  a,/*123*/
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+output [(MODE?7:3):0] bbbb,
+              output [DW/2-1:0]  c);//);
+
+  // Design content        
+endmodule
+
+module tr12 /*123*/
+( /*123*/
+    inout [7:0]  a,/*123*/
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+output [(MODE?7:3):0] bbbb,
+              output [DW/2-1:0]  c);//);
+
+  // Design content        
+endmodule
+
+
 
 module test1
   (
@@ -299,5 +345,58 @@ parameter c_jaddr             = 6'b011000;
 
 endmodule
 
+module test8( clk, reset_n,sclk,s_hclk,m_hclk        );/*123*/
 
+   //=======================  parameters  ======================================
+  // parameter c_use_self_path  = 1;
+   parameter c_addr               = 4'b0101;/*123*/
+parameter c_jaddr             = 6'b011000;
+   input     clk1,clk2;     /*123*/
+   input     rt_n;//
+   input     sclk;     //
+   input     s_hclk;   //
+   input     [7:0] m_hclk;   //AXI Master clock
+    
+   wire          regs_sample_edge;
+   wire          sclk_gated_tmp;
+
+endmodule
+
+module test9( clk, reset_n,sclk,/*123*/
+s_hclk,m_hclk          /*123*/
+   );/*123*/
+
+   //=======================  parameters  ======================================
+  parameter c_use_self_path  = 1;
+   parameter c_addr               = 4'b0101;/*123*/
+parameter c_jaddr             = 6'b011000;
+   input     clk1,clk2;      //
+   input     rt_n;//
+   input     sclk;     //
+   input     s_hclk;  /*123*/
+   input     [7:0] m_hclk;   //AXI Master clock
+    
+   wire          regs_sample_edge;
+   wire          sclk_gated_tmp;
+
+endmodule
+
+
+module test10( clk, reset_n,sclk,/*123*/
+s_hclk,m_hclk         /*123*/ // AXI Master clock /*123*/
+   );
+
+   //=======================  parameters  ======================================
+  parameter c_use_self_path  = 1;/*123*/
+   parameter c_addr               = 4'b0101;/*123*/
+parameter c_jaddr             = 6'b011000;
+   input     clk1,clk2;      //
+   input     rt_n;//
+   input     sclk;     //
+   input     s_hclk;   //
+   input     [7:0] m_hclk;   /*123*/
+   wire          regs_sample_edge;
+   wire          sclk_gated_tmp;
+
+endmodule
 
