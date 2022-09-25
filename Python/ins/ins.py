@@ -3,11 +3,11 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2021-02-05 21:40:10
- $ @LastEditTime : 2022-08-29 14:38:23
+ $ @LastEditTime : 2022-09-25 20:54:03
  $ @LastEditors  : Luma
  $ @Description  :    
 
- $ @FilePath     : \git\linux\Linux\Script\python\ins.py
+ $ @FilePath     : \working\script\Python\ins\ins.py
 '''
 import os
 import re
@@ -42,31 +42,31 @@ class sources:
     def get_module(self,module_name=None):
         regex_module_head_verilog_2001 = re.compile(r'''
             [^\w]*module\s*
-            (%s)                                                                                                                                                                    #1 module name
-            ((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\#(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*parameter(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*)?            #2
-            ((?(2)(?:.*\n)*?[^/\n]*(?:/[^/\n]+)*))                                                                                                                                  #3 parameter
-            (?(2)\s*\)(?:\s*//.*\n)?)
-            (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*(?:output|input|inout).*\n)+?[^/\n]*(?:/[^/\n]+)*)                                                                               #4 ports
-            (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\)[ \t]*?;
-            (.*)                                                                                                                                                                    #5 comments
+            (%s)                                                                                                                                                                                                                        #1 module name
+            ((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\#(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*parameter(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*)?            #2
+            ((?(2)(?:.*\n)*?[^/\n]*(?:/[^/\n]+)*))                                                                                                                                                                                      #3 parameter
+            (?(2)\s*\)(?:\s*//.*\n)?(?:\s*`.*\n)?)
+            (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*(?:output|input|inout).*\n)+?[^/\n]*(?:/[^/\n]+)*)                                                                                                                      #4 ports
+            (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\)[ \t]*?;
+            (.*)                                                                                                                                                                                                                        #5 comments
             [\s\S]*?endmodule
             ''' %(module_name if module_name is not None else '\w+'),re.VERBOSE)
 
         regex_module_head_verilog_1995 = re.compile(r'''
             \W*module\s*
-            (%s)                                                                                                                                 #1 module name
+            (%s)                                                                                                                                                            #1 module name
             \s*\(
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*\w+(?<!input)(?<!output)(?<!inout)[ \t]*?,?)+(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?\s*)*?)     #2
-            (?:\s*/\*.*\*/\n)*?(?:\s*//.*\n)*?\s*?\)[ \t]*?;(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?\n
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*`include.*\n)*                                                                                 #  include
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*`define.*\n)*                                                                                  #  define
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*localparam.*\n)*                                                                               #  localparam
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*parameter.*\n)*)                                                                              #3 parameter
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*`include.*\n)*                                                                                 #  include
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*`define.*\n)*                                                                                  #  define
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*localparam.*\n)*                                                                               #  localparam
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*(?:output|input|inout).*\n)+)                                                                 #4 ports
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*\w+(?<!input)(?<!output)(?<!inout)[ \t]*?,?)+(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?(?:[ \t]*`.*)?\s*)*?)     #2
+            (?:\s*/\*.*\*/\n)*?(?:\s*//.*\n)*?(?:\s*`.*\n)*?\s*?\)[ \t]*?;(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?(?:[ \t]*`.*)?\n
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`include.*\n)*                                                                                               #  include
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`define.*\n)*                                                                                                #  define
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*localparam.*\n)*                                                                                             #  localparam
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*parameter.*\n)*)                                                                                            #3 parameter
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`include.*\n)*                                                                                               #  include
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`define.*\n)*                                                                                                #  define
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*localparam.*\n)*                                                                                             #  localparam
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*(?:output|input|inout).*\n)+)                                                                               #4 ports
             [\s\S]*?endmodule
             ''' %(module_name if module_name is not None else '\w+'),re.VERBOSE)
 
@@ -102,7 +102,7 @@ class module:
         [ \t]*=[ \t]*
         ([`'{}()\w \t+\-*<>:]+(?:/?[`'{}()\w \t+\-*<>:]+)+)  #2 value
         [ \t]*[,;]?[ \t]*
-        ((?:/\*.*\*/)?(?://.*)?)?                            #3 comment
+        ((?:/\*.*\*/)?(?://.*)?(?:`.*)?)?                    #3 comment
         ''',re.VERBOSE)
     regex_module_ports = re.compile(r'''
         ^[ \t]*(?!//)[ \t]*?(output|input|inout)             #1 direction
@@ -113,7 +113,7 @@ class module:
         [ \t]*
         ((?:\w+[ \t]*[,;]?[ \t]*)+)                          #4 port name
         [ \t]*
-        ((?:/\*.*\*/)?(?://.*)?)?                            #5 comment
+        ((?:/\*.*\*/)?(?://.*)?(?:`.*)?)?                    #5 comment
         ''',re.VERBOSE)
     tb_initial = '''
         bit Clk  ;

@@ -178,6 +178,31 @@ output [(MODE?7:3):0] bbbb,
   // Design content        
 endmodule
 
+module tr13 /*123*/
+#(parameter/*123*/
+    MODE = 1,/*123*/
+`ifdef ASIC
+    DW   = 10,//()()
+`else
+    CW   = 10,//()()
+`endif
+    FW   = (DW/2+CW/2))//123
+( /*123*/
+    inout [7:0]  a,/*123*/
+`ifdef ASIC
+    inout [7:0]  a1,/*123*/
+    inout [7:0]  a2,/*123*/
+`else
+    inout [7:0]  a3,/*123*/
+    inout [7:0]  a4,/*123*/
+`endif
+    inout [7:0]  a5,/*123*/
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+output [(MODE?7:3):0] bbbb,
+              output [DW/2-1:0]  c);//);
+
+  // Design content        
+endmodule
 
 
 module test1
@@ -394,6 +419,30 @@ parameter c_jaddr             = 6'b011000;
    input     rt_n;//
    input     sclk;     //
    input     s_hclk;   //
+   input     [7:0] m_hclk;   /*123*/
+   wire          regs_sample_edge;
+   wire          sclk_gated_tmp;
+
+endmodule
+
+module test11( clk, reset_n,sclk,/*123*/
+s_hclk,m_hclk         /*123*/ // AXI Master clock /*123*/
+   );
+
+   //=======================  parameters  ======================================
+`ifdef ASIC
+  parameter c_use_self_path  = 1;/*123*/
+`else
+   parameter c_addr               = 4'b0101;/*123*/
+`endif
+parameter c_jaddr             = 6'b011000;
+   input     clk1,clk2;      //
+   input     rt_n;//
+`ifdef ASIC
+   input     sclk;     //
+`else
+   input     s_hclk;   //
+`endif
    input     [7:0] m_hclk;   /*123*/
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
