@@ -3,11 +3,11 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2021-02-05 21:40:10
- $ @LastEditTime : 2022-08-29 14:38:23
+ $ @LastEditTime : 2022-08-23 15:10:08
  $ @LastEditors  : Luma
  $ @Description  :    
 
- $ @FilePath     : \git\linux\Linux\Script\python\ins.py
+ $ @FilePath     : \working\git\MyProjects\reg_map\reg_map\ins.py
 '''
 import os
 import re
