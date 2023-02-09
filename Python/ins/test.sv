@@ -425,7 +425,310 @@ parameter c_jaddr             = 6'b011000;
 
 endmodule
 
-module test11( clk, reset_n,sclk,/*123*/
+//------------------------------------------------ for `ifdef testing ----------------------------------------
+module ifdef_test_1 
+(
+    //ICB
+    input                         Rstn      
+    ,input                         Clear     
+    ,input                         Clk       
+
+    //test
+    ,input  [1:0]      DIN, OEN 
+
+    `ifdef FPGA
+
+    //LPF
+    ,input                [DW-1:0] DataIn    //(1111);
+    ,input                         DataInVld //);
+    ,input [1:0][(FW+1)/2-1:0][CW-1:0] Coeff     
+    ,output               [DW-1:0] DataOut   //456
+    ,input                         DataOutVld//123
+    //input                         DataInV
+    `endif
+);//test here ();
+//processing
+always @( posedge Clk or negedge Rstn )
+begin
+    if( ~Rstn )
+        data_in <= 'h0;
+    else if( Clear )
+        data_in <= 'h0;
+    else if( DataInVld )
+        data_in <= {data_in[FN-2:0],DataIn};
+end
+//---------------------------------------------------------------------
+endmodule
+
+module ifdef_test_2 
+(
+    //122
+    //ICB1111
+    input                         Rstn      
+    ,input                         Clear     
+    ,input                         Clk       
+
+`ifdef FPGA
+
+  //test
+  ,input                         Clk       
+
+  //test
+`endif FPGA
+//test
+    ,input                         Clk       
+    //test
+    ,input  [1:0]      DIN, OEN 
+
+    //LPF
+    ,input                [DW-1:0] DataIn    //(1111);
+    ,input                         DataInVld //);
+    ,input [1:0][(FW+1)/2-1:0][CW-1:0] Coeff     
+    ,output               [DW-1:0] DataOut   //456
+    ,input                         DataOutVld//123
+    //input                         DataInV
+);//test here ();
+//---------------------------------------------------------------------
+//local parameter
+localparam DN = 5;
+localparam FN = (FW+1)/2;
+localparam SL = 7;
+//---------------------------------------------------------------------
+reg [DW-1:0] data_out;
+assign DataOut = data_out;
+//---------------------------------------------------------------------
+//processing
+always @( posedge Clk or negedge Rstn )
+begin
+    if( ~Rstn )
+        data_in <= 'h0;
+    else if( Clear )
+        data_in <= 'h0;
+    else if( DataInVld )
+        data_in <= {data_in[FN-2:0],DataIn};
+end
+//---------------------------------------------------------------------
+endmodule
+
+
+
+module ifdef_test_3
+#(parameter
+    // DW = 10,//   ,  ()()
+    CW = 10,//    ()()
+
+    `ifdef FPGA
+
+  //test
+  NW = 10,       //()()
+
+  //test
+`endif
+//test
+
+    NW = 10,       //()()
+    FW = (DW/2+CW/2)//()()
+)//()()
+( inout [7:0]  a,//);
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+ input                          abcd, //);
+ input                          abcde, //   );
+ input                          abcde, //   ,,);
+              output [DW/2-1:0]  c//);
+);
+ 
+  // Design content        
+endmodule
+
+module ifdef_test_4
+#(parameter
+    // DW = 10,//   ,  ()()
+    CW = 10//    ()()
+
+    `ifdef FPGA
+
+  //test
+  ,NW = 10       //()()
+
+  //test
+
+//test
+
+    ,NW = 10       //()()
+    ,FW = (DW/2+CW/2)//()()
+    `endif
+)//()()
+( inout [7:0]  a,//);
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+ input                          abcd, //);
+ input                          abcde, //   );
+ input                          abcde, //   ,,);
+              output [DW/2-1:0]  c//);
+);
+ 
+  // Design content        
+endmodule
+
+
+
+
+module ifdef_test_5( clk, reset_n,sclk,/*123*/
+s_hclk,m_hclk         /*123*/ // AXI Master clock /*123*/
+   );
+
+   //=======================  parameters  ======================================
+  parameter c_use_self_path  = 1;/*123*/
+   parameter c_addr               = 4'b0101;/*123*/
+parameter c_jaddr             = 6'b011000;
+   input     clk1,clk2;      //
+   input     rt_n;//
+   `ifdef FPGA
+   input     sclk;     //
+   input     s_hclk;   //
+   `endif
+   input     [7:0] m_hclk;   /*123*/
+   wire          regs_sample_edge;
+   wire          sclk_gated_tmp;
+
+endmodule
+
+module ifdef_test_6(
+   // global signals
+   clk,            // in system clock
+   reset_n,        // in  low active asynchronous reset for system domain
+   sclk,           // in sensor pixel clock
+   `ifdef FPGA
+   s_hclk,         // A Slave clock
+   `endif
+   m_hclk          // AXI Master clock
+   );
+
+   //=======================  parameters  ======================================
+  parameter c_use_self_path  = 1;
+`ifdef FPGA
+   parameter c_addr               = 4'b0101;//666
+   //565
+   parameter c_jaddr             = 6'b011000;
+`endif
+   
+
+
+   // global signals
+   input     clk1,clk2;      //
+   `ifdef FPGA
+   input     rt_n;//
+   `endif
+   input     sclk;     //
+   input     s_hclk;   //
+   input     [7:0] m_hclk;   //AXI Master clock
+    
+   wire          regs_sample_edge;
+   wire          sclk_gated_tmp;
+
+endmodule
+
+module ifdef_test_7(
+   // global signals
+   clk            // in system clock
+   ,reset_n        // in  low active asynchronous reset for system domain
+   ,sclk           // in sensor pixel clock
+   `ifdef FPGA
+   ,s_hclk         // A Slave clock
+   `endif
+   ,m_hclk          // AXI Master clock
+   );
+
+   //=======================  parameters  ======================================
+  parameter c_use_self_path  = 1;
+`ifdef FPGA
+   parameter c_addr               = 4'b0101;//666
+   //565
+   parameter c_jaddr             = 6'b011000;
+`endif
+   
+
+
+   // global signals
+   input     clk1,clk2;      //
+   `ifdef FPGA
+   input     rt_n;//
+   `endif
+   input     sclk;     //
+   input     s_hclk;   //
+   input     [7:0] m_hclk;   //AXI Master clock
+   `endif
+    
+   wire          regs_sample_edge;
+   wire          sclk_gated_tmp;
+
+endmodule
+
+module ifdef_test_8 (
+                 clk
+                ,rst_n
+                `ifdef FPGA
+                ,pwrite
+                ,psel
+                `endif
+                ,penable
+                ,paddr
+                ,pwdata
+                ,prdata
+                ,fld_w1_sgl
+                ,fld_w1_bus
+                `ifdef FPGA
+                ,fld_wo1_sgl
+                ,fld_wo1_bus
+                `endif
+                );
+input           clk;
+input           rst_n;
+`ifdef FPGA
+input           pwrite;
+input           psel;
+`endif
+input           penable;
+input  [31:0]   paddr;
+input  [31:0]   pwdata;
+output [31:0]   prdata;
+output          fld_w1_sgl;
+output [2:0]    fld_w1_bus;
+`ifdef FPGA
+output          fld_wo1_sgl;
+output [2:0]    fld_wo1_bus;
+`endif
+wire            clk;
+wire            rst_n;
+wire            pwrite;
+wire            psel;
+wire            penable;
+wire [31:0]     paddr;
+wire [31:0]     pwdata;
+wire [31:0]     TMPLREG4;
+wire            tmplreg1_wr;
+wire            tmplreg1_rd;
+wire            tmplreg2_wr;
+wire            tmplreg2_rd;
+wire            tmplreg3_wr;
+wire            tmplreg3_rd;
+wire            tmplreg4_wr;
+wire            tmplreg4_rd;
+wire            reg_wr;
+wire            reg_rd;
+assign reg_wr = psel & pwrite & penable;
+
+always@(*) begin
+    case(paddr)
+        32'h40070030 + 8'h00 : prdata = TMPLREG1  ;
+        32'h40070030 + 8'h04 : prdata = TMPLREG2  ;
+        32'h40070030 + 8'h08 : prdata = TMPLREG3  ;
+        32'h40070030 + 8'h0c : prdata = TMPLREG4  ;
+        default:prdata = 32'b0;
+    endcase
+end
+endmodule
+
+module ifdef_test_9( clk, reset_n,sclk,/*123*/
 s_hclk,m_hclk         /*123*/ // AXI Master clock /*123*/
    );
 
@@ -448,4 +751,3 @@ parameter c_jaddr             = 6'b011000;
    wire          sclk_gated_tmp;
 
 endmodule
-

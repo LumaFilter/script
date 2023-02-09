@@ -39,36 +39,38 @@ class sources:
         else:
             print(f'There is no any module in {self.file_name}')
 
+
     def get_module(self,module_name=None):
         regex_module_head_verilog_2001 = re.compile(r'''
             [^\w]*module\s*
-            (%s)                                                                                                                                                                                                                        #1 module name
-            ((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\#(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*parameter(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*)?            #2
-            ((?(2)(?:.*\n)*?[^/\n]*(?:/[^/\n]+)*))                                                                                                                                                                                      #3 parameter
-            (?(2)\s*\)(?:\s*//.*\n)?(?:\s*`.*\n)?)
-            (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*(?:output|input|inout).*\n)+?[^/\n]*(?:/[^/\n]+)*)                                                                                                                      #4 ports
-            (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*\)[ \t]*?;
-            (.*)                                                                                                                                                                                                                        #5 comments
+            (%s)                                                                                                                                                                    #1 module name
+            ((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\#(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\((?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*parameter(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*)?            #2
+            ((?(2)(?:.*\n)*?[^/\n]*(?:/[^/\n]+)*))                                                                                                                                  #3 parameter
+            (?(2)\s*\)(?:\s*//.*\n)?)
+            (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\((?:\s*/\*.*\*/\n)?(?:\s*//.*\n)?\s*
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*,?\s*(?:output|input|inout).*\n)+?[^/\n]*(?:/[^/\n]+)*                              #4 ports:main
+             (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*)                                                                                         #4 ports:comments,`endif,.etc
+            \s*\)[ \t]*?;
+            (.*)                                                                                                                                                                    #5 comments
             [\s\S]*?endmodule
             ''' %(module_name if module_name is not None else '\w+'),re.VERBOSE)
 
         regex_module_head_verilog_1995 = re.compile(r'''
             \W*module\s*
-            (%s)                                                                                                                                                            #1 module name
+            (%s)                                                                                                                                              #1 module name
             \s*\(
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*\w+(?<!input)(?<!output)(?<!inout)[ \t]*?,?)+(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?(?:[ \t]*`.*)?\s*)*?)     #2
-            (?:\s*/\*.*\*/\n)*?(?:\s*//.*\n)*?(?:\s*`.*\n)*?\s*?\)[ \t]*?;(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?(?:[ \t]*`.*)?\n
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`include.*\n)*                                                                                               #  include
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`define.*\n)*                                                                                                #  define
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*localparam.*\n)*                                                                                             #  localparam
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*parameter.*\n)*)                                                                                            #3 parameter
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`include.*\n)*                                                                                               #  include
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*`define.*\n)*                                                                                                #  define
-            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*localparam.*\n)*                                                                                             #  localparam
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*\s*(?:output|input|inout).*\n)+)                                                                               #4 ports
-            [\s\S]*?endmodule
-            ''' %(module_name if module_name is not None else '\w+'),re.VERBOSE)
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*,?(?:\s*\w+(?<!input)(?<!output)(?<!inout)[ \t]*?,?)+(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?(?:\s*`.*\n)?\s*)*?)   #2 module head
+            (?:\s*/\*.*\*/\n)*?(?:\s*//.*\n)*?\s*?\)[ \t]*?;(?:[ \t]*/\*.*\*/)?(?:[ \t]*//.*)?\n
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*`.*\n)*?                                                                                                     #  define、include
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*localparam.*\n)*                                               #  localparam
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*parameter.*\n)*
+             (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*)                                                                   #3 parameter
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*`.*\n)*                                                                                                     #  define、include
+            (?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*localparam.*\n)*                                               #  localparam
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*(?:output|input|inout).*\n)+
+             (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*)                                                                   #4 ports
+        #     [\s\S]*?endmodule
+        #     ''' %(module_name if module_name is not None else '\w+'),re.VERBOSE)
 
         file_obj         = open(self.file_name,'r')
         file_str         = file_obj.read()
@@ -98,14 +100,14 @@ class sources:
 class module:
     regex_module_params = re.compile(r'''
         ^[ \t]*(?!//)[ \t]*?(?:parameter[ \t]*)*
-        (\w+)                                                #1 param name
+        ,?\s*(\w+)                                           #1 param name
         [ \t]*=[ \t]*
         ([`'{}()\w \t+\-*<>:]+(?:/?[`'{}()\w \t+\-*<>:]+)+)  #2 value
         [ \t]*[,;]?[ \t]*
-        ((?:/\*.*\*/)?(?://.*)?(?:`.*)?)?                    #3 comment
+        ((?:/\*.*\*/)?(?://.*)?)?                            #3 comment
         ''',re.VERBOSE)
     regex_module_ports = re.compile(r'''
-        ^[ \t]*(?!//)[ \t]*?(output|input|inout)             #1 direction
+        ^[ \t]*(?!//)[ \t]*?,?(output|input|inout)           #1 direction
         [ \t]*
         (wire|reg)?                                          #2 type
         [ \t]*
@@ -113,7 +115,7 @@ class module:
         [ \t]*
         ((?:\w+[ \t]*[,;]?[ \t]*)+)                          #4 port name
         [ \t]*
-        ((?:/\*.*\*/)?(?://.*)?(?:`.*)?)?                    #5 comment
+        ((?:/\*.*\*/)?(?://.*)?)?                            #5 comment
         ''',re.VERBOSE)
     tb_initial = '''
         bit Clk  ;
@@ -178,16 +180,19 @@ class module:
             else:
                 port_info = {'flag' : 0,'comment' : line}
             self.ports_info_list.append(port_info)
+            logging.debug(f'curr_line\t:{line}')
             logging.debug(f're_ports_obj\t:{re_ports_obj}')
             logging.debug(f'port_info\t:{port_info}')
         logging.info(f'ports_info_list\t:{self.ports_info_list}')
 
     def instance(self):
         params_num                = len(self.params_info_list)
+        params_num_vld            = len([line for line in self.params_info_list if line['flag']])
         params_max_width_of_name  = max([len(str( line['name'] ))   for line in self.params_info_list if line['flag'] ]) if params_num > 0 else 0
         params_max_width_of_value = max([len(str( line['value'] ))  for line in self.params_info_list if line['flag'] ]) if params_num > 0 else 0
 
         ports_num                 = len(self.ports_info_list)
+        ports_num_vld             = len([line for line in self.ports_info_list if line['flag']])
         ports_max_width_of_width  = max([len(str( line['width'] )) for line in self.ports_info_list if line['flag'] ])
         ports_max_width_of_name   = max([len(str( line['name'] ))  for line in self.ports_info_list if line['flag'] ])
         ports_max_width_of_name_s = max([len(str( port_name )) for line in self.ports_info_list if line['flag'] for port_name in line['name'].split(',')])
@@ -224,11 +229,13 @@ class module:
         #intance
         if params_num > 0:
             self.out_line_list.append('{} #\n('.format(self.module_name))
+            params_cnt_vld = 0
             for i in range(params_num):
                 if self.params_info_list[i]['flag']:
+                    params_cnt_vld += 1
                     self.out_line_list.append('.{:<{}} ( {:<{}} ){}{}'.format(self.params_info_list[i]['name'].lstrip(),ins_max_width_of_name,
                                                                               self.params_info_list[i]['name'].lstrip(),ins_max_width_of_value,
-                                                                              ',' if i < params_num-1 else "",
+                                                                              ',' if params_cnt_vld < params_num_vld else "",
                                                                               self.params_info_list[i]['comment']  ))
                     logging.debug(f"params_info_list:\t{self.params_info_list[i]['name']}\t")
                 else:
@@ -237,12 +244,14 @@ class module:
         else:
             self.out_line_list.append('{} {}\n('.format(self.module_name,self.ins_name))
 
+        ports_cnt_vld = 0
         for i in range(ports_num):
             if self.ports_info_list[i]['flag']:
+                ports_cnt_vld += 1
                 for j,port_name in enumerate(self.ports_info_list[i]['name'].split(',')):
                     self.out_line_list.append('.{:<{}} ( {:<{}} ){}{}'.format(port_name.lstrip(),ins_max_width_of_name,
                                                                               port_name.lstrip(),ins_max_width_of_value,
-                                                                              ',' if not( i == ports_num-1 and j == len(self.ports_info_list[i]['name'].split(','))-1 ) else "",
+                                                                              ',' if not( ports_cnt_vld == ports_num_vld and j == len(self.ports_info_list[i]['name'].split(','))-1 ) else "",
                                                                               self.ports_info_list[i]['comment']  ))
                     logging.debug(f"ports_info_list:\t{self.ports_info_list[i]['name']}:j\t:{j}")
             else:
@@ -259,6 +268,7 @@ def arg_parser():
     parser.add_argument("-indent",metavar="IndentWidth",help='specify the indentation of instance',type=int,default=30)
     parser.add_argument("-fout",metavar="OutputFile",help='specify the output file',default='DUT.sv')
     parser.add_argument('-v','--verbose',choices=['DEBUG','INFO','WARNING','ERROR','CRITICAL'],dest='verbose',help='set logger_level',default='ERROR')
+    parser.add_argument('-log',help='output log to log file',action='store_true')
 
     # parser.print_help()
     options       = vars(parser.parse_args())
@@ -269,16 +279,20 @@ def arg_parser():
     indentation   = options["indent"]
     tar_file_name = options["fout"]
     logger_level  = options["verbose"]
+    logger_log    = options["log"]
     print('input file    : {}\nmodule name   : {}\ninstance mode : {}\noutput file   : {}'.format(file_name_lst,module_name,ins_mode,tar_file_name))
-    return file_name_lst,module_name,ins_mode,ins_name,indentation,tar_file_name,logger_level
+    return file_name_lst,module_name,ins_mode,ins_name,indentation,tar_file_name,logger_level,logger_log
 
 # --Main-----------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     ins_mode_list  = ['inst_&_wire','inst_only','inst_tb']
-    file_name_lst,module_name,ins_mode,ins_name,indentation,tar_file_name,logger_level = arg_parser()
+    file_name_lst,module_name,ins_mode,ins_name,indentation,tar_file_name,logger_level,logger_log = arg_parser()
 
     logger = logging.getLogger(__name__)
-    logging.basicConfig(format = '%(levelname)s - %(message)s\n/-------------------------------------------------------------------------------------------',level=logger_level)
+    if logger_log:
+        logging.basicConfig(format = '%(levelname)s - %(message)s\n/-------------------------------------------------------------------------------------------',level=logger_level,filename='ins.log',filemode='w')
+    else:
+        logging.basicConfig(format = '%(levelname)s - %(message)s\n/-------------------------------------------------------------------------------------------',level=logger_level)
     # logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s\t\t- %(funcName)s',level=logger_level)
     # logging.debug('debug，用来打印一些调试信息，级别最低,所以加调试语句用这个，然后发布时将level改成ERROR')
     # logging.info('info，用来打印一些正常的操作信息')
