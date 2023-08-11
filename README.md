@@ -3,7 +3,7 @@
 <!--
  * @Author       : Luma
  * @Date         : 2022-08-12 21:06:28
- * @LastEditTime : 2022-09-25 20:26:14
+ * @LastEditTime : 2023-08-11 10:02:22
  * @LastEditors  : Luma
  * @Description  :    
 
@@ -21,9 +21,11 @@
 ### ins
 [自动例化verilog模块的脚本](https://mp.weixin.qq.com/s/UVtZUQGcQxA_kV7qtUM03g)    
 [自动例化verilog模块的脚本(第二版）](https://mp.weixin.qq.com/s/NCFXnCP8FJSWvJKV4n0VLQ)    
+[演示视频点这里](https://www.bilibili.com/video/BV1nR4y1q7fQ/?spm_id_from=333.788&vd_source=f37f913b4255a35921d75f1b74bed423)    
 
 ### reg map
-[reg map 自动生成寄存器配置脚本](https://mp.weixin.qq.com/s/Z1zFkaH2pCoufePyVg5msw)
+[reg map 自动生成寄存器配置脚本](https://mp.weixin.qq.com/s/Z1zFkaH2pCoufePyVg5msw)    
+[演示视频点这里](https://www.bilibili.com/video/BV1B24y1n7U2/?spm_id_from=333.788&vd_source=f37f913b4255a35921d75f1b74bed423)    
 
 ### file control
 [用Python脚本实现文件操作（一）](https://mp.weixin.qq.com/s/nokpdovNXB65Cc8GVE639g)    
