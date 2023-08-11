@@ -3,7 +3,7 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2022-07-30 14:53:41
- $ @LastEditTime : 2023-08-11 09:23:14
+ $ @LastEditTime : 2023-08-11 13:56:28
  $ @LastEditors  : Luma
  $ @Description  :    
 
@@ -652,7 +652,7 @@ class sheet:
 
 def arg_parser():
     parser = argparse.ArgumentParser(allow_abbrev = True)
-    parser.add_argument("-f","--filename",metavar="InputFile",dest='filename',help='Specify input xls file',nargs='+')
+    parser.add_argument("-f","--filename",metavar="InputFile",dest='filename',help='Specify input xls file',nargs='+',default='')
     parser.add_argument("-sheet",metavar="SheetName",help='To specify one sheet in the file')
     parser.add_argument("-author",metavar="Author",help='specify author of output files',default=None)
     parser.add_argument("-namerule",choices=[0,1,2],help=f'specify the naming rule of FieldName   0:auto;1:UpperCamelCase;2:under_score_case',type=int,default=0)
@@ -670,11 +670,10 @@ def arg_parser():
     ins_switch    = args["ins"]
     logger_level  = args["verbose"]
 
-    if file_name_lst:
-        for file_name in file_name_lst:
-            if not os.path.exists(file_name):
-                print(f"[Error]: No such file :{file_name}")
-                sys.exit(1)
+    for file_name in file_name_lst:
+        if not os.path.exists(file_name):
+            print(f"[Error]: No such file :{file_name}")
+            sys.exit(1)
 
     print('input file    : {}\nsheet name    : {}\nauthor        : {}\noutput file   : {}\nlogger level  : {}'.format(file_name_lst,sheet_name,author,tar_file_name,logger_level))
     return file_name_lst,sheet_name,author,name_rule,tar_file_name,ins_switch,logger_level
