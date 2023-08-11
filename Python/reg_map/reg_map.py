@@ -3,7 +3,7 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2022-07-30 14:53:41
- $ @LastEditTime : 2022-09-25 19:42:17
+ $ @LastEditTime : 2023-08-11 09:23:14
  $ @LastEditors  : Luma
  $ @Description  :    
 
@@ -670,10 +670,11 @@ def arg_parser():
     ins_switch    = args["ins"]
     logger_level  = args["verbose"]
 
-    for file_name in file_name_lst:
-        if not os.path.exists(file_name):
-            print(f"[Error]: No such file :{file_name}")
-            sys.exit(1)
+    if file_name_lst:
+        for file_name in file_name_lst:
+            if not os.path.exists(file_name):
+                print(f"[Error]: No such file :{file_name}")
+                sys.exit(1)
 
     print('input file    : {}\nsheet name    : {}\nauthor        : {}\noutput file   : {}\nlogger level  : {}'.format(file_name_lst,sheet_name,author,tar_file_name,logger_level))
     return file_name_lst,sheet_name,author,name_rule,tar_file_name,ins_switch,logger_level
