@@ -3,7 +3,7 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2022-07-30 14:53:41
- $ @LastEditTime : 2023-08-11 13:56:28
+ $ @LastEditTime : 2023-08-17 19:55:57
  $ @LastEditors  : Luma
  $ @Description  :    
 
@@ -129,7 +129,7 @@ class sheet:
         self.gen_file(sheet_name,tar_file_name)
 
     def calc_reset_val(self,ResetValue=None,Len=None,FiledName=None,group_entire_en=0):
-        rst_val_obj = re.match(r'\d*\'?([bohd]?)(\d+)',str(ResetValue).lower())
+        rst_val_obj = re.match(r'\d*\'?([bohd]?)([\d|a-f]+)',str(ResetValue).lower())
         if rst_val_obj is not None:
             ResetValue =''
             if rst_val_obj.group(1) == 'o':
