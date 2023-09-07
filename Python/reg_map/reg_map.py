@@ -3,7 +3,7 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2022-07-30 14:53:41
- $ @LastEditTime : 2023-08-17 19:55:57
+ $ @LastEditTime : 2023-09-07 20:09:18
  $ @LastEditors  : Luma
  $ @Description  :    
 
@@ -294,7 +294,7 @@ class sheet:
 
         low_last  = group["Width"].unique()[0]
         row_index = 0
-        run_en    =1
+        run_en    = 1
         while run_en:
             if( ( group.loc[row_index,"High"] ) < ( low_last - 1 )):
                 columns = group.columns
@@ -304,6 +304,13 @@ class sheet:
             low_last  = group.loc[row_index,"Low"]
             row_index = row_index + 1
             run_en    = row_index <= group.index[-1]
+
+        if( low_last > 0 ):
+            logging.debug(f'low_last:{low_last}')
+            logging.debug(f'row_index:{row_index}')
+            columns = group.columns
+            group = pd.DataFrame(np.insert(group.values,row_index,values=[group.loc[row_index-1,"Base\nAddress"],group.loc[row_index-1,"Offset\nAddress"],group.loc[row_index-1,"RegName"],group.loc[row_index-1,"Width"],( low_last - 1 ),0,low_last,low_last,0,0,"reserved","reserved",group.loc[row_index-1,"RegAccess"],"RO",0,0,f"{low_last}'h0",''],axis=0))
+            group.columns = columns
 
         logging.debug(f'{key}\n{group}')
         return group
