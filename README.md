@@ -3,7 +3,7 @@
 <!--
  * @Author       : Luma
  * @Date         : 2022-08-12 21:06:28
- * @LastEditTime : 2023-08-11 10:02:22
+ * @LastEditTime : 2023-10-07 22:37:13
  * @LastEditors  : Luma
  * @Description  :    
 
@@ -34,3 +34,6 @@
 ### markdown
 [MarkDown 规范脚本](https://mp.weixin.qq.com/s/KWWhdOCKqMgC7qI7SI0-Qg)    
 
+### contents
+[为PDF添加书签目录](https://mp.weixin.qq.com/s/qXHCwPQHXFi4G3Gg4vfU0w)    
+[演示视频点这里](https://www.bilibili.com/video/BV1VN4y1Z7Sx/?spm_id_from=333.999.0.0&vd_source=f37f913b4255a35921d75f1b74bed423)    
