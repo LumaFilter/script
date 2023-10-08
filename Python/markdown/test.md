@@ -3,27 +3,27 @@
 <!--
  * @Author       : Luma
  * @Date         : 2022-02-27 22:55:55
- * @LastEditTime : 2022-02-28 17:18:03
+ * @LastEditTime : 2023-10-08 13:25:15
  * @LastEditors  : Luma
  * @Description  :    
 
- * @FilePath     : \MarkDown\MD\test.md
+ * @FilePath     : \working\script\Python\markdown\test.md
 -->
 
-# 1.包含引用的列表
+# 包含引用的列表
 *   阅读的方法:
     > 打开书本。
-# 2.分割线
+# 分割线
 * * *
 ***
 - - -
 ----
-# 3.引用加链接
+# 引用加链接
 > [Python在ASIC中的应用](http://exasic.com/article/index.php?md=py)
-# 4.链接
+# 链接
 [Python在ASIC中的应用](http://exasic.com/article/index.php?md=py)
-# 5 代码块
-### 5.1 使用pathlib.Path()：
+# 代码块
+## 使用pathlib.Path()：
 ```py
 from pathlib import Path
 
@@ -34,6 +34,11 @@ basepath = Path('my_directory')
 from pathlib import Path
 basepath = Path('my_directory')
 ```
-# 6 嵌套列表
+### test
+test;
+# 嵌套列表
 * 一级无序列表内容
    * 二级无序列表内容
+
+#  图片
+![](./imgs/1.png)
