@@ -1,4 +1,4 @@
-module FIR 
+module FIR
 (
     //ICB
     input                         Rstn      ,
@@ -40,7 +40,7 @@ endmodule
 
 
 
-module tr1 
+module tr1
 #(parameter
     // DW = 10,//   ,  ()()
     CW = 10,//    ()()
@@ -54,8 +54,8 @@ module tr1
  input                          abcde, //   ,,);
               output [DW/2-1:0]  c//);
 );
- 
-  // Design content        
+
+  // Design content
 endmodule
 
 module tr2 //fot test
@@ -67,17 +67,17 @@ input [2:0] b,
  input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr3 #(parameter // fot test
     DW = 10,//,,,,
     CW = 10,
-    FW = (DW/2+CW/2+CW>>1) ) 
+    FW = (DW/2+CW/2+CW>>1) )
     ( inout [7:0]  a,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr4 #(parameter
@@ -90,7 +90,7 @@ module tr4 #(parameter
     ( inout [7:0]  a,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr5 #(parameter
@@ -101,36 +101,36 @@ module tr5 #(parameter
     ( inout [7:0]  a,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
-module tr6 
+module tr6
 # ( parameter
     DW = 10,FW = (DW/2+CW/2+CW>>1)
     )   //666
     ( inout [7:0]  a,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
-module tr7 
+module tr7
     ( inout [7:0]  a,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
-module tr8 
-# 
-( 
+module tr8
+#
+(
   parameter
     DW = 10,FW = (DW/2+CW/2+CW>>1)
     )   //666
     ( inout [7:0]  a,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr9 #(parameter
@@ -143,7 +143,7 @@ module tr9 #(parameter
 output [(MODE?7:3):0] bbbb,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr10 #(parameter/*123*/
@@ -156,7 +156,7 @@ module tr10 #(parameter/*123*/
 output [(MODE?7:3):0] bbbb,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr11 ( /*123*/
@@ -165,7 +165,7 @@ module tr11 ( /*123*/
 output [(MODE?7:3):0] bbbb,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr12 /*123*/
@@ -175,7 +175,7 @@ module tr12 /*123*/
 output [(MODE?7:3):0] bbbb,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
 module tr13 /*123*/
@@ -201,9 +201,26 @@ module tr13 /*123*/
 output [(MODE?7:3):0] bbbb,
               output [DW/2-1:0]  c);//);
 
-  // Design content        
+  // Design content
 endmodule
 
+module tr14
+# ( parameter
+    DW = 10,FW = (DW/2+CW/2+CW>>1)
+    )   //666
+    ( input wire [7:0]  a,
+     input [7:0] [7:0]  c,
+     input wire [7:0]  a,
+     input wire [DW/2-1:0] [DW/2-1:0]  c,
+     input [DW/2-1:0][DW/2-1:0]  c,
+     input [DW/2-1:0] [DW/2-1:0]  c,
+     input [(MODE?7:3):0] [DW/2-1:0]  c,
+     input [(MODE?7:3):0] [DW/2-1:0]  c,
+     input wire [(MODE?7:3):0] [DW/2-1:0]  c,
+     output [(MODE?7:3):0] [DW/2-1:0]  c);//);
+
+  // Design content
+endmodule
 
 module test1
   (
@@ -223,7 +240,7 @@ module test1
    //565
    parameter c_jaddr             = 6'b011000;
 
-   
+
 `include "1_reg.v"
   `include "para.v"
 
@@ -235,7 +252,7 @@ module test1
    input     sclk;     //
    input     s_hclk;   //
    input     m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -257,7 +274,7 @@ module test2(
    //565
    parameter c_jaddr             = 6'b011000;
 
-   
+
 
 
    // global signals
@@ -266,7 +283,7 @@ module test2(
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -284,7 +301,7 @@ parameter c_jaddr             = 6'b011000;
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -303,7 +320,7 @@ parameter c_jaddr             = 6'b011000;
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -322,7 +339,7 @@ parameter c_jaddr             = 6'b011000;
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -339,7 +356,7 @@ parameter c_jaddr             = 6'b011000;
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -364,7 +381,7 @@ parameter c_jaddr             = 6'b011000;
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -381,7 +398,7 @@ parameter c_jaddr             = 6'b011000;
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -400,7 +417,7 @@ parameter c_jaddr             = 6'b011000;
    input     sclk;     //
    input     s_hclk;  /*123*/
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -426,22 +443,22 @@ parameter c_jaddr             = 6'b011000;
 endmodule
 
 //------------------------------------------------ for `ifdef testing ----------------------------------------
-module ifdef_test_1 
+module ifdef_test_1
 (
     //ICB
-    input                         Rstn      
-    ,input                         Clear     
-    ,input                         Clk       
+    input                         Rstn
+    ,input                         Clear
+    ,input                         Clk
 
     //test
-    ,input  [1:0]      DIN, OEN 
+    ,input  [1:0]      DIN, OEN
 
     `ifdef FPGA
 
     //LPF
     ,input                [DW-1:0] DataIn    //(1111);
     ,input                         DataInVld //);
-    ,input [1:0][(FW+1)/2-1:0][CW-1:0] Coeff     
+    ,input [1:0][(FW+1)/2-1:0][CW-1:0] Coeff
     ,output               [DW-1:0] DataOut   //456
     ,input                         DataOutVld//123
     //input                         DataInV
@@ -460,30 +477,30 @@ end
 //---------------------------------------------------------------------
 endmodule
 
-module ifdef_test_2 
+module ifdef_test_2
 (
     //122
     //ICB1111
-    input                         Rstn      
-    ,input                         Clear     
-    ,input                         Clk       
+    input                         Rstn
+    ,input                         Clear
+    ,input                         Clk
 
 `ifdef FPGA
 
   //test
-  ,input                         Clk       
+  ,input                         Clk
 
   //test
 `endif FPGA
 //test
-    ,input                         Clk       
+    ,input                         Clk
     //test
-    ,input  [1:0]      DIN, OEN 
+    ,input  [1:0]      DIN, OEN
 
     //LPF
     ,input                [DW-1:0] DataIn    //(1111);
     ,input                         DataInVld //);
-    ,input [1:0][(FW+1)/2-1:0][CW-1:0] Coeff     
+    ,input [1:0][(FW+1)/2-1:0][CW-1:0] Coeff
     ,output               [DW-1:0] DataOut   //456
     ,input                         DataOutVld//123
     //input                         DataInV
@@ -536,8 +553,8 @@ module ifdef_test_3
  input                          abcde, //   ,,);
               output [DW/2-1:0]  c//);
 );
- 
-  // Design content        
+
+  // Design content
 endmodule
 
 module ifdef_test_4
@@ -565,8 +582,8 @@ module ifdef_test_4
  input                          abcde, //   ,,);
               output [DW/2-1:0]  c//);
 );
- 
-  // Design content        
+
+  // Design content
 endmodule
 
 
@@ -610,7 +627,7 @@ module ifdef_test_6(
    //565
    parameter c_jaddr             = 6'b011000;
 `endif
-   
+
 
 
    // global signals
@@ -621,7 +638,7 @@ module ifdef_test_6(
    input     sclk;     //
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 
@@ -645,7 +662,7 @@ module ifdef_test_7(
    //565
    parameter c_jaddr             = 6'b011000;
 `endif
-   
+
 
 
    // global signals
@@ -657,7 +674,7 @@ module ifdef_test_7(
    input     s_hclk;   //
    input     [7:0] m_hclk;   //AXI Master clock
    `endif
-    
+
    wire          regs_sample_edge;
    wire          sclk_gated_tmp;
 

@@ -3,7 +3,7 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2021-02-05 21:40:10
- $ @LastEditTime : 2022-09-25 20:54:03
+ $ @LastEditTime : 2024-01-23 17:28:19
  $ @LastEditors  : Luma
  $ @Description  :    
 
@@ -111,7 +111,7 @@ class module:
         [ \t]*
         (wire|reg)?                                          #2 type
         [ \t]*
-        ((?:\[[`'{},()\w \t+\-*/<>:?]+\])*)                  #3 width
+        ((?:\[[`'{},()\w \t+\-*/<>:?]+\][ \t]*)*)            #3 width
         [ \t]*
         ((?:\w+[ \t]*[,;]?[ \t]*)+)                          #4 port name
         [ \t]*
