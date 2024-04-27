@@ -3,7 +3,7 @@
 '''
  $ @Author       : Luma
  $ @Date         : 2021-02-05 21:40:10
- $ @LastEditTime : 2024-01-23 17:28:19
+ $ @LastEditTime : 2024-04-27 15:56:19
  $ @LastEditors  : Luma
  $ @Description  :    
 
@@ -48,7 +48,7 @@ class sources:
             ((?(2)(?:.*\n)*?[^/\n]*(?:/[^/\n]+)*))                                                                                                                                  #3 parameter
             (?(2)\s*\)(?:\s*//.*\n)?)
             (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*\((?:\s*/\*.*\*/\n)?(?:\s*//.*\n)?\s*
-            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*,?\s*(?:output|input|inout).*\n)+?[^/\n]*(?:/[^/\n]+)*                              #4 ports:main
+            ((?:(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*\s*,?\s*(?:\(.*\))?\s*(?:output|input|inout).*\n)+?[^/\n]*(?:/[^/\n]+)*                              #4 ports:main
              (?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*(?:\s*`.*\n)*(?:\s*/\*.*\*/\n)*(?:\s*//.*\n)*)                                                                                         #4 ports:comments,`endif,.etc
             \s*\)[ \t]*?;
             (.*)                                                                                                                                                                    #5 comments
@@ -107,15 +107,15 @@ class module:
         ((?:/\*.*\*/)?(?://.*)?)?                            #3 comment
         ''',re.VERBOSE)
     regex_module_ports = re.compile(r'''
-        ^[ \t]*(?!//)[ \t]*?,?(output|input|inout)           #1 direction
+        ^[ \t]*(?!//)[ \t]*?(?:\(.*\))?[ \t]*?,?(output|input|inout)   #1 direction
         [ \t]*
-        (wire|reg)?                                          #2 type
+        (wire|reg)?                                                    #2 type
         [ \t]*
-        ((?:\[[`'{},()\w \t+\-*/<>:?]+\][ \t]*)*)            #3 width
+        ((?:\[[`'{},()\w \t+\-*/<>:?]+\][ \t]*)*)                      #3 width
         [ \t]*
-        ((?:\w+[ \t]*[,;]?[ \t]*)+)                          #4 port name
+        ((?:\w+[ \t]*[,;]?[ \t]*)+)                                    #4 port name
         [ \t]*
-        ((?:/\*.*\*/)?(?://.*)?)?                            #5 comment
+        ((?:/\*.*\*/)?(?://.*)?)?                                      #5 comment
         ''',re.VERBOSE)
     tb_initial = '''
         bit Clk  ;

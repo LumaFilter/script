@@ -768,3 +768,24 @@ parameter c_jaddr             = 6'b011000;
    wire          sclk_gated_tmp;
 
 endmodule
+
+module vivado #(parameter/*123*/
+    MODE = 1,/*123*/
+    DW   = 10,//()()
+    CW   = 10,//()()
+    FW   = (DW/2+CW/2))//123
+( inout [7:0]  a,//();
+ input                           bbbbbbbbbbbbbbbbbbbbbbbb,zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz,//);
+output [(MODE?7:3):0] bbbb,
+              output [DW/2-1:0]  c,
+              (* mark_debug="true" *)output reg [17:0]  wr_addr,                       // Memory Write Address  
+(* mark_debug="true" *)output reg [7:0]   wr_be,                         // Memory Write Byte Enable  
+(* mark_debug="true" *)output reg [31:0]  wr_data,                       // Memory Write Data  
+(* mark_debug="true" *)output reg         wr_en,                         // Memory Write Enable  
+(* mark_debug="true" *)input              wr_busy                        // Memory Write Busy 
+              );//);
+
+  // Design content
+endmodule
+
+
